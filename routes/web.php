@@ -21,11 +21,11 @@ Route::middleware(['checkAuthUser'])->group(function(){
 
 });
 
-Route::resource('Product', ProductController::class);
+Route::resource('product', ProductController::class);
 
 Route::get('contact/{email}', ContactController::class);
 
-Route::resource('Post', PostController::class);
+Route::resource('post', PostController::class);
 
 Route::get('/', function () {
     return view('welcome');

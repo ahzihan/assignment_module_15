@@ -25,7 +25,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         Post::create($request->all());
-        return redirect('post.index')->with('success','Data inserted successfully.');
+        return redirect()->route('post.index')->with('success','Data inserted successfully.');
     }
 
 
@@ -50,7 +50,7 @@ class PostController extends Controller
     {
         Post::where('id',$request->id)->update(array('title'=>$request->title,
         'description'=>$request->description,));
-        return redirect('post.index')->with('success','Data updated successfully.');
+        return redirect()->route('post.index')->with('success','Data updated successfully.');
     }
 
     /**
@@ -59,7 +59,7 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         Post::where('id',$id)->delete();
-        return redirect('post.index')->with('success','post has been deleted successfully!');
+        return redirect()->route('post.index')->with('success','post has been deleted successfully!');
     }
 
 }
