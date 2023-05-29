@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 class HomeController extends Controller
 {
     public function Index(){
-        return Redirect::to('/dashboard')->withStatus(302);
+        return Redirect::to('dashboard')->withStatus(302);
     }
 }
 

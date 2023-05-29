@@ -3,40 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return "All post show this route";
+        $data = Post::all();
+        return view('post.index', compact('data'));
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        return "This is post create route";
+        return view('post.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        return "This route create new post";
+        Post::create($request->all());
+        return redirect('post.index')->with('success','Data inserted successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
-        return "Single Post Show by using id";
-
+        //
     }
 
     /**
@@ -44,7 +39,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        return "This is post edit route";
+        $data=Post::find($id);
+        return view('post.edit',compact('data'));
     }
 
     /**
@@ -52,7 +48,9 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return "this route using for update post";
+        Post::where('id',$request->id)->update(array('title'=>$request->title,
+        'description'=>$request->description,));
+        return redirect('post.index')->with('success','Data updated successfully.');
     }
 
     /**
@@ -60,8 +58,8 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        return "This route delete post using by id";
+        Post::where('id',$id)->delete();
+        return redirect('post.index')->with('success','post has been deleted successfully!');
     }
-
 
 }

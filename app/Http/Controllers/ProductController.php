@@ -3,36 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
+
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        return "list of all products";
+        $data = Product::all();
+        return view('product.index', compact('data'));
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        return "create a new product";
+        return view('product.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        return "Store a newly created product";
+        Product::create($request->all());
+        return redirect('product.index')->with('success','Data inserted successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         //
@@ -43,7 +40,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        return "The form to edit an existing product";
+        $data=Product::find($id);
+        return view('product.edit',compact('data'));
     }
 
     /**
@@ -51,7 +49,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return "Update the specified product.";
+        Product::where('id',$request->id)->update(array('product_name'=>$request->product_name,
+        'price'=>$request->price,));
+        return redirect('product.index')->with('success','Data updated successfully.');
     }
 
     /**
@@ -59,6 +59,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        return "Delete the specified product.";
+        Product::where('id',$id)->delete();
+        return redirect('product.index')->with('success','Product has been deleted successfully!');
     }
 }
